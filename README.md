@@ -1,2 +1,2 @@
-# FlyLauncher
+# FlyeLauncher
 GTK Linux app launcher 
