@@ -12,6 +12,7 @@ const { TOP, BOTTOM, LEFT, RIGHT } = Astal.WindowAnchor
 export default function FliLauncher() {
   let contentbox: Gtk.Box
   let win: Astal.Window
+  let searchEntry: Gtk.Entry | undefined
 
   const appsDb = new AstalApps.Apps()
   const [results, setResults] = createState(new Array<AstalApps.Application>())
@@ -56,6 +57,10 @@ export default function FliLauncher() {
       anchor={TOP | BOTTOM | LEFT | RIGHT}
       exclusivity={Astal.Exclusivity.IGNORE}
       keymode={Astal.Keymode.EXCLUSIVE}
+      onNotifyVisible={({ visible }) => {
+        if (visible) searchEntry?.grab_focus()
+        else searchEntry?.set_text("")
+      }}
     >
       <Gtk.EventControllerKey onKeyPressed={onKey} />
       <Gtk.GestureClick onPressed={onClick} />
@@ -66,12 +71,17 @@ export default function FliLauncher() {
         halign={Gtk.Align.CENTER}
         orientation={Gtk.Orientation.VERTICAL}
       >
-        <SearchBar onSearch={onSearch} />
+        <SearchBar onSearch={onSearch} onReady={(e) => (searchEntry = e)} />
 
-        <box class="launcher-body">
-
-          {/* Coluna esquerda — navegação */}
-          <SideNav appCount={appsDb.get_list().length} />
+        <Gtk.Paned
+          class="launcher-body"
+          orientation={Gtk.Orientation.HORIZONTAL}
+          $={(self) => self.set_position(160)}
+        >
+          {/* Coluna esquerda — SideNav */}
+          <box class="sidenav-pane">
+            <SideNav appCount={appsDb.get_list().length} />
+          </box>
 
           {/* Coluna direita — conteúdo principal */}
           <box class="launcher-main" orientation={Gtk.Orientation.VERTICAL} hexpand vexpand>
@@ -100,7 +110,7 @@ export default function FliLauncher() {
             </box>
 
           </box>
-        </box>
+        </Gtk.Paned>
       </box>
     </window>
   )
