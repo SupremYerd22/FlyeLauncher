@@ -1,9 +1,10 @@
-// ── Cores fixas (identidade visual do painel) ────────────
-$surface: #0d1a2e;
-$bg:      #080f1c;
-$border:  rgba(100, 160, 255, 0.10);
-$hover:   rgba(100, 160, 255, 0.07);
-$radius:  12px;
+// ── Paleta Arch Linux ─────────────────────────────────────
+$surface:    #0d1117;
+$bg:         #090d12;
+$border:     rgba(23, 147, 209, 0.13);
+$hover:      rgba(23, 147, 209, 0.07);
+$arch-blue:  #1793d1;
+$radius:     12px;
 
 // ── Cores do sistema (GTK theme) ─────────────────────────
 // Uso: #{"@variavel"} para escapar o @ do SCSS
@@ -26,8 +27,8 @@ window#launcher {
   border:        1px solid $border;
   min-width:     820px;
   min-height:    540px;
-  box-shadow:    0 12px 48px rgba(0, 0, 0, 0.70),
-                 0 0 0 1px rgba(100, 160, 255, 0.06);
+  box-shadow:    0 12px 48px rgba(0, 0, 0, 0.85),
+                 0 0 0 1px rgba(23, 147, 209, 0.08);
 }
 
 // ── Layout corpo ──────────────────────────────────────────
@@ -108,7 +109,7 @@ paned.launcher-body {
 
   .distro-logo {
     font-size: 18px;
-    color:     $accent;
+    color:     $arch-blue;
   }
 
   .distro-name {
@@ -181,17 +182,17 @@ paned.launcher-body {
     &:hover { background: $hover; }
 
     &.active {
-      border-left-color: $accent;
-      background:        #{"alpha(@accent_bg_color, 0.18)"};
+      border-left-color: $arch-blue;
+      background:        rgba($arch-blue, 0.14);
 
       .nav-icon,
       .nav-label {
-        color: $accent;
+        color: $arch-blue;
       }
 
       .nav-badge {
-        background: #{"alpha(@accent_bg_color, 0.25)"};
-        color:      $accent;
+        background: rgba($arch-blue, 0.20);
+        color:      $arch-blue;
       }
     }
 
@@ -261,5 +262,15 @@ paned.launcher-body {
     button.nav-item:hover {
       background: #{"alpha(@theme_fg_color, 0.06)"};
     }
+
+    button.nav-item.active {
+      border-left-color: $accent;
+      background:        #{"alpha(@accent_bg_color, 0.14)"};
+
+      .nav-icon, .nav-label { color: $accent; }
+      .nav-badge { background: #{"alpha(@accent_bg_color, 0.20)"}; color: $accent; }
+    }
+
+    .distro-logo { color: $accent; }
   }
 }
