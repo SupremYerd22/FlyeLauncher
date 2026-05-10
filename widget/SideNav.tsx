@@ -1,6 +1,5 @@
 import { createState } from "ags"
 import { Gtk } from "ags/gtk4"
-import AstalApps from "gi://AstalApps"
 
 export type Section = "apps" | "recent" | "actions" | "calc"
 
