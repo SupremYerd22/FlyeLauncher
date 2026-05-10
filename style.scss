@@ -220,4 +220,46 @@ paned.launcher-body {
     }
 
   }
+
+  separator.nav-divider {
+    background: $border;
+    min-height: 1px;
+    margin:     4px 0;
+  }
+}
+
+// ── Tema do sistema ───────────────────────────────────────
+.launcher-panel.theme-system {
+  background: #{"@theme_bg_color"};
+  border-color: #{"alpha(@theme_fg_color, 0.12)"};
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+
+  paned.launcher-body {
+    border-top-color: #{"alpha(@theme_fg_color, 0.12)"};
+  }
+
+  .sidenav-pane {
+    border-right-color: #{"alpha(@theme_fg_color, 0.12)"};
+  }
+
+  .searchbar {
+    border-bottom-color: #{"alpha(@theme_fg_color, 0.12)"};
+    separator { background: #{"alpha(@theme_fg_color, 0.20)"}; }
+  }
+
+  .search-results {
+    border-bottom-color: #{"alpha(@theme_fg_color, 0.12)"};
+  }
+
+  .app-grid .app-grid-header {
+    border-bottom-color: #{"alpha(@theme_fg_color, 0.12)"};
+  }
+
+  .sidenav {
+    separator.nav-divider { background: #{"alpha(@theme_fg_color, 0.12)"}; }
+
+    button.nav-item:hover {
+      background: #{"alpha(@theme_fg_color, 0.06)"};
+    }
+  }
 }

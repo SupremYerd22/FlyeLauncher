@@ -22,7 +22,12 @@ export default function FliLauncher() {
   // Nav Bar Sections
   const [selectedSection, setSelectedSection] = createState<Section>('recent')
 
- 
+  // Theme
+  const [theme, setTheme] = createState<'default' | 'system'>('default')
+  function toggleTheme() {
+    setTheme(theme() === 'default' ? 'system' : 'default')
+  }
+
 
   function onSearch(text: string) {
     if (text === "") {
@@ -72,7 +77,7 @@ export default function FliLauncher() {
       <Gtk.GestureClick onPressed={onClick} />
       <box
         $={(ref) => (contentbox = ref)}
-        class="launcher-panel"
+        class={theme((t) => `launcher-panel${t === 'system' ? ' theme-system' : ''}`)}
         valign={Gtk.Align.CENTER}
         halign={Gtk.Align.CENTER}
         orientation={Gtk.Orientation.VERTICAL}
@@ -86,7 +91,13 @@ export default function FliLauncher() {
         >
           {/* Coluna esquerda — SideNav */}
           <box class="sidenav-pane">
-            <SideNav setActive={setSelectedSection} active={selectedSection} appCount={appsDb.get_list().length} />
+            <SideNav
+              setActive={setSelectedSection}
+              active={selectedSection}
+              appCount={appsDb.get_list().length}
+              theme={theme}
+              onThemeToggle={toggleTheme}
+            />
           </box>
 
           {/* Coluna direita — conteúdo principal */}
@@ -112,7 +123,7 @@ export default function FliLauncher() {
 
             {/* Grid de apps por categoria */}
             <box visible={searching((v) => !v)} hexpand vexpand>
-              <AppGrid appsDb={appsDb} />
+              <AppGrid appsDb={appsDb} selectedSection="actions"/>
             </box>
 
           </box>
