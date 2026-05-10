@@ -15,6 +15,7 @@ export default function FliLauncher() {
   let win: Astal.Window
   let searchEntry: Gtk.Entry | undefined
   let appGridButtons: Gtk.Button[] = []
+  const searchButtonMap = new Map<AstalApps.Application, Gtk.Button>()
   let sideNavButtons: Gtk.Button[] = []
   let tabZone: 'grid' | 'nav' = 'grid'
 
@@ -70,7 +71,18 @@ export default function FliLauncher() {
       return true
     }
 
-    if (tabZone === 'grid' && (
+    if (searching() && (keyval === Gdk.KEY_Up || keyval === Gdk.KEY_Down)) {
+      const btns = results().map((a) => searchButtonMap.get(a)).filter((b): b is Gtk.Button => !!b)
+      const focused = win.get_focus()
+      const currentIdx = btns.indexOf(focused as Gtk.Button)
+      const newIdx = keyval === Gdk.KEY_Up
+        ? Math.max(0, currentIdx - 1)
+        : Math.min(btns.length - 1, currentIdx + 1)
+      btns[newIdx]?.grab_focus()
+      return true
+    }
+
+    if (tabZone === 'grid' && !searching() && (
       keyval === Gdk.KEY_Up || keyval === Gdk.KEY_Down ||
       keyval === Gdk.KEY_Left || keyval === Gdk.KEY_Right
     )) {
@@ -198,7 +210,11 @@ export default function FliLauncher() {
             >
               <For each={results}>
                 {(application) => (
-                  <button class="app-item" onClicked={() => launch(application)}>
+                  <button
+                    class="app-item"
+                    $={(ref) => searchButtonMap.set(application, ref)}
+                    onClicked={() => launch(application)}
+                  >
                     <box spacing={10}>
                       <image iconName={application.iconName} pixelSize={22} />
                       <label label={application.name} halign={Gtk.Align.START} hexpand />
