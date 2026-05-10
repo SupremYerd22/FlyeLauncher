@@ -10,7 +10,7 @@ import { Section } from "./flyeLauncherTypes"
 
 const { TOP, BOTTOM, LEFT, RIGHT } = Astal.WindowAnchor
 
-export default function FliLauncher() {
+export default function FlyeLauncher() {
   let contentbox: Gtk.Box
   let win: Astal.Window
   let searchEntry: Gtk.Entry | undefined

@@ -87,15 +87,15 @@ ags request toggle
 O build gera um binário único (GJS bundle) que pode ser distribuído ou instalado no sistema:
 
 ```bash
-ags bundle app.ts flie-launcher
+ags bundle app.ts flye-launcher
 ```
 
-Isso compila todo o TypeScript/JSX, SCSS e assets em um único arquivo executável chamado `flie-launcher`.
+Isso compila todo o TypeScript/JSX, SCSS e assets em um único arquivo executável chamado `flye-launcher`.
 
 Para especificar um diretório de saída diferente:
 
 ```bash
-ags bundle app.ts dist/flie-launcher
+ags bundle app.ts dist/flye-launcher
 ```
 
 ---
@@ -106,17 +106,17 @@ Após gerar o binário, as etapas recomendadas para integração com o sistema s
 
 **1. Tornar o binário executável e mover para o PATH**
 ```bash
-chmod +x flie-launcher
-sudo mv flie-launcher /usr/local/bin/flie-launcher
+chmod +x flye-launcher
+sudo mv flye-launcher /usr/local/bin/flye-launcher
 ```
 
 **2. Criar um arquivo `.desktop` para autostart ou integração com o WM**
 ```ini
-# ~/.config/autostart/flie-launcher.desktop
+# ~/.config/autostart/flye-launcher.desktop
 [Desktop Entry]
 Type=Application
 Name=FlyeLauncher
-Exec=flie-launcher
+Exec=flye-launcher
 Hidden=false
 NoDisplay=false
 X-GNOME-Autostart-enabled=true
@@ -128,12 +128,12 @@ Adicione um bind no seu compositor (Hyprland, Sway, etc.) para acionar o toggle:
 
 ```bash
 # Exemplo — Hyprland (hyprland.conf)
-bind = SUPER, Space, exec, ags request toggle -a flie-launcher
+bind = SUPER, Space, exec, ags request toggle -a flye-launcher
 ```
 
 ```bash
 # Exemplo — Sway (config)
-bindsym Mod4+space exec ags request toggle -a flie-launcher
+bindsym Mod4+space exec ags request toggle -a flye-launcher
 ```
 
 O launcher permanece rodando em background e a janela é apenas mostrada/escondida a cada chamada do toggle, garantindo abertura instantânea.
