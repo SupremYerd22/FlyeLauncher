@@ -4,7 +4,7 @@ import Graphene from "gi://Graphene"
 import AstalApps from "gi://AstalApps"
 import app from "ags/gtk4/app"
 import SearchBar from "./widget/SearchBar"
-import SideNav from "./widget/SideNav"
+import SideNav, { Section } from "./widget/SideNav"
 import AppGrid from "./widget/AppGrid"
 
 const { TOP, BOTTOM, LEFT, RIGHT } = Astal.WindowAnchor
@@ -17,6 +17,11 @@ export default function FliLauncher() {
   const appsDb = new AstalApps.Apps()
   const [results, setResults] = createState(new Array<AstalApps.Application>())
   const [searching, setSearching] = createState(false)
+
+  // Nav Bar Sections
+  const [selectedSection, setSelectedSection] = createState<Section>('recent')
+
+ 
 
   function onSearch(text: string) {
     if (text === "") {
@@ -80,7 +85,7 @@ export default function FliLauncher() {
         >
           {/* Coluna esquerda — SideNav */}
           <box class="sidenav-pane">
-            <SideNav appCount={appsDb.get_list().length} />
+            <SideNav setActive={setSelectedSection} active={selectedSection} appCount={appsDb.get_list().length} />
           </box>
 
           {/* Coluna direita — conteúdo principal */}

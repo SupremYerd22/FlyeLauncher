@@ -1,4 +1,4 @@
-import { createState } from "ags"
+import { Accessor, createState, Setter } from "ags"
 import { Gtk } from "ags/gtk4"
 
 export type Section = "apps" | "recent" | "actions" | "calc"
@@ -11,12 +11,13 @@ type NavItemDef = {
 }
 
 type Props = {
-  active?: Section
+  active: Accessor<Section>
   onSelect?: (section: Section) => void
   appCount?: number
+  setActive: Setter<Section>
 }
 
-export default function SideNav({ active: initialActive = "recent", onSelect, appCount }: Props) {
+export default function SideNav({ active, setActive, onSelect, appCount }: Props) {
 
   const NAV_ITEMS: NavItemDef[] = [
     { id: "apps",    icon: "󰀻", label: "Aplicativos", count: appCount },
@@ -24,7 +25,6 @@ export default function SideNav({ active: initialActive = "recent", onSelect, ap
     { id: "actions", icon: "󱐋", label: "Ações",       count: 0 },
   ]
 
-  const [active, setActive] = createState<Section>(initialActive)
 
   function select(section: Section) {
     setActive(section)
