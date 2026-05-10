@@ -1,7 +1,6 @@
 import { Accessor, createState, Setter } from "ags"
 import { Gtk } from "ags/gtk4"
-
-export type Section = "apps" | "recent" | "actions" | "calc"
+import { Section } from "../flyeLauncherTypes"
 
 type NavItemDef = {
   id: Section

@@ -4,8 +4,9 @@ import Graphene from "gi://Graphene"
 import AstalApps from "gi://AstalApps"
 import app from "ags/gtk4/app"
 import SearchBar from "./widget/SearchBar"
-import SideNav, { Section } from "./widget/SideNav"
+import SideNav from "./widget/SideNav"
 import AppGrid from "./widget/AppGrid"
+import { Section } from "./flyeLauncherTypes"
 
 const { TOP, BOTTOM, LEFT, RIGHT } = Astal.WindowAnchor
 
