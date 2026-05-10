@@ -4,11 +4,15 @@ import { AppGroup } from "../../../flyeLauncherTypes";
 import AstalApps from "gi://AstalApps"
 
 type props = {
-  groups :AppGroup[]
-  launch :(application: AstalApps.Application) => void
+  groups: AppGroup[]
+  launch: (application: AstalApps.Application) => void
+  onAllButtons?: (refs: Gtk.Button[]) => void
 }
 
-export default function AllApps({groups, launch} :props) {
+export default function AllApps({ groups, launch, onAllButtons }: props) {
+  const allButtonRefs: Gtk.Button[] = []
+  const totalApps = groups.reduce((sum, g) => sum + g.apps.length, 0)
+  let buttonIdx = 0
 
   return (
     <Gtk.ScrolledWindow hexpand vexpand>
@@ -25,7 +29,14 @@ export default function AllApps({groups, launch} :props) {
                 rowSpacing={4}
               >
                 {group.apps.map((application) => (
-                  <button class="app-card" onClicked={() => launch(application)}>
+                  <button
+                    class="app-card"
+                    $={(ref) => {
+                      allButtonRefs[buttonIdx++] = ref
+                      if (buttonIdx === totalApps) onAllButtons?.(allButtonRefs)
+                    }}
+                    onClicked={() => launch(application)}
+                  >
                     <box
                       orientation={Gtk.Orientation.VERTICAL}
                       spacing={6}

@@ -1,9 +1,8 @@
 import { Gtk } from "ags/gtk4"
 import AstalApps from "gi://AstalApps"
-import Pango from "gi://Pango"
 import app from "ags/gtk4/app"
 import { customCategories, XDG_CATEGORIES, CATEGORY_ORDER } from "./categories"
-import { AppGroup, Section } from "../flyeLauncherTypes"
+import { AppGroup } from "../flyeLauncherTypes"
 import AllApps from "./components/appGrid/AllApps"
 
 function getCategory(application: AstalApps.Application): string {
@@ -33,10 +32,10 @@ function groupApps(apps: AstalApps.Application[]): AppGroup[] {
 
 type Props = {
   appsDb: AstalApps.Apps
-  selectedSection: Section
+  onAllButtons?: (refs: Gtk.Button[]) => void
 }
 
-export default function AppGrid({ appsDb }: Props) {
+export default function AppGrid({ appsDb, onAllButtons }: Props) {
   const groups = groupApps(appsDb.get_list())
 
   function launch(application: AstalApps.Application) {
@@ -52,7 +51,7 @@ export default function AppGrid({ appsDb }: Props) {
         <label class="app-grid-hint" label="↑↓←→  navegar    Enter  abrir" halign={Gtk.Align.END} />
       </box>
 
-      <AllApps groups={groups} launch={launch}/>
+      <AllApps groups={groups} launch={launch} onAllButtons={onAllButtons} />
 
     </box>
   )

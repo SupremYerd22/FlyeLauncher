@@ -1,4 +1,4 @@
-import { Accessor, createState, Setter } from "ags"
+import { Accessor, Setter } from "ags"
 import { Gtk } from "ags/gtk4"
 import { Section } from "../flyeLauncherTypes"
 
@@ -18,9 +18,11 @@ type Props = {
   setActive: Setter<Section>
   theme?: Accessor<Theme>
   onThemeToggle?: () => void
+  onReady?: (refs: Gtk.Button[]) => void
 }
 
-export default function SideNav({ active, setActive, onSelect, appCount, theme, onThemeToggle }: Props) {
+export default function SideNav({ active, setActive, onSelect, appCount, theme, onThemeToggle, onReady }: Props) {
+  const navButtonRefs: Gtk.Button[] = []
 
   const NAV_ITEMS: NavItemDef[] = [
     { id: "apps",    icon: "󰀻", label: "Aplicativos", count: appCount },
@@ -40,8 +42,12 @@ export default function SideNav({ active, setActive, onSelect, appCount, theme, 
         label="NAVEGAR"
         halign={Gtk.Align.START}
       />
-      {NAV_ITEMS.map((item) => (
+      {NAV_ITEMS.map((item, idx) => (
         <button
+          $={(ref) => {
+            navButtonRefs[idx] = ref
+            if (idx === NAV_ITEMS.length - 1) onReady?.(navButtonRefs)
+          }}
           class={active((a) => `nav-item${a === item.id ? " active" : ""}`)}
           onClicked={() => select(item.id)}
         >

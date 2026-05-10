@@ -87,8 +87,10 @@ paned.launcher-body {
     min-width:     88px;
     transition:    background 100ms ease;
 
-    &:hover {
-      background: #{"alpha(@accent_bg_color, 0.13)"};
+    &:hover, &:focus {
+      background: $arch-blue;
+      color: $bg;
+      outline: none;
 
       label { color: #{"@accent_bg_color"}; }
     }
@@ -179,7 +181,7 @@ paned.launcher-body {
     border-left:   2px solid transparent;
     padding:       8px 10px;
 
-    &:hover { background: $hover; }
+    &:hover, &:focus { background: $hover; outline: none; }
 
     &.active {
       border-left-color: $arch-blue;
@@ -259,7 +261,8 @@ paned.launcher-body {
   .sidenav {
     separator.nav-divider { background: #{"alpha(@theme_fg_color, 0.12)"}; }
 
-    button.nav-item:hover {
+    button.nav-item:hover,
+    button.nav-item:focus {
       background: #{"alpha(@theme_fg_color, 0.06)"};
     }
 
